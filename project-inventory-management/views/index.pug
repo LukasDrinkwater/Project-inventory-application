@@ -1,5 +1,15 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+block content 
+  h1= title 
+  p Welcome to a website that sells models of cars!
+
+  h1 Dynamic stock and info content
+
+  p The following models are available:
+
+  ul
+    li #[strong Models:] !{model_count}
+    li #[strong Model variants:] !{model_instance_count}
+    li #[strong Manufactures:] !{manufacturer_count}
+    li #[strong Categories of car:] !{category_count}

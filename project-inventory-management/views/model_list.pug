@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  br
+  ul
+    each model in all_models
+      li
+        a(href=model.url) #{model.manufacturer.name} #{model.name} #{model.year}
+        p £#{model.price}
+
+
+    else 
+        p There are no models. You can add models at the top.
+        //- a(href=model.url) #{model.name}
+        //- p #{model.manufacturer.name}
+        //- a(href=model.url) #{model}
+
+  

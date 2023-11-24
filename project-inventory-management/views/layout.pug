@@ -1,7 +1,34 @@
 doctype html
-html
+html(lang="en")
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    //- link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet', type="text/css", href='/stylesheets/style.css')
   body
-    block content
+    div(class="header-container")
+    
+      div(class="name-container")
+        p(class="website-name") WEBSITE NAME
+
+      div(class="header-links")
+      a(href="/catalog/allModels") All Models
+      a(href="/catalog/manufacturer") All Manufacturers
+      a(href="/catalog/categories") All Categories
+        br
+        br
+      a(href="/catalog/models/create") Add Model
+      a(href="/catalog/manufacturer/create") Add Manufacturer
+      a(href="/catalog/categories/create") Add Category 
+      hr
+        //- a(href="/catalog") Home
+        //- a(href="/catalog/sportscars") Sports Cars 
+        //- a(href="/catalog/sportscars/create") Create Sports Car 
+        //- a(href="/catalog/gtcars") GT Cars 
+        //- a(href="/catalog/gtcars/create") Create GT Car 
+        //- a(href="/catalog/hothatches") Hot Hatches 
+        //- a(href="/catalog/hothatches/create") Create Hot Hatches
+        //- a(href="/catalog/saloonsestates") Saloons and Estates 
+        //- a(href="/catalog/saloonsestates/create") Create Saloons and Estate 
+    
+    div(class="index-container")
+      block content

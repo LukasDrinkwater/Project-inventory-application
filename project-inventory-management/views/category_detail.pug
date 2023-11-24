@@ -1,0 +1,25 @@
+extends layout 
+
+block content 
+
+  h1 Category: #{category.name}
+
+  div(class="model-list-container")
+
+    h4 Models 
+
+    dl 
+      each model in category_models 
+        dt
+          a(href=model.url) #{model.manufacturer.name} #{model.name} #{model.year}
+          p #{model.url}
+          p £#{model.price}
+        
+      else 
+        p This category has no models. You can add models at the top.
+
+  hr
+  p
+    a(href=category.url+'/delete') Delete Category
+  p
+    a(href=category.url+'/update') Update Category

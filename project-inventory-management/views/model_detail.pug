@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+
+  
+  div(class="model-detail-container")
+    h1 #{model.manufacturer.name} #{model.name}
+    p #{model.description}
+    p Year: #{model.year}
+    p Price: £#{model.price}
+  
+
+  hr
+  p
+    a(href=model.url+'/delete') Delete Model
+  p
+    a(href=model.url+'/update') Update Model

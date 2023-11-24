@@ -1,0 +1,25 @@
+extends layout 
+
+block content 
+
+  h1 Manufacturer: #{manufacturer.name}
+
+  div(class="model-list-container")
+
+    h4 Models 
+
+    dl 
+      each model in manufacturer_models 
+        dt
+          a(href=model.url) #{model.manufacturer.name} #{model.name} #{model.year}
+          p #{model.url}
+          p £#{model.price}
+        
+      else 
+        p This category has no models. You can add models at the top.
+
+  hr
+  p
+    a(href=manufacturer.url+'/delete') Delete Manufacturer
+  p
+    a(href=manufacturer.url+'/update') Update Manufacturer
