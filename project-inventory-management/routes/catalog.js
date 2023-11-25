@@ -22,6 +22,17 @@ router.get("/manufacturer", manufacturer_controller.manufacturer_list);
 
 router.get("/manufacturer/:id", manufacturer_controller.manufacturer_detail);
 
+// GET request to update manufacturer
+router.get(
+  "/manufacturer/:id/update",
+  manufacturer_controller.manufacturer_update_get
+);
+// POST request to update manufacturer
+// router.get(
+//   "/manufacturer/:id/update",
+//   manufacturer_controller.manufacturer_update_post
+// );
+
 /// CATEGORY ROUTES ///
 
 router.get("/categories", category_controller.category_list);

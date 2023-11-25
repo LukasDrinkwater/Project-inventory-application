@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+
+  h1 #{title}
+
+  form(method="post" action="") 
+    div(class="form-group")
+      label(for="name") Category: 
+      input(class="form-control" type="text", placeholder="Saloon, Estate etc." name="name" value=(undefined===category ? "" : category.name))
+    button(class="button-primary" type="submit") Submit
+
+  if errors 
+    ul 
+      for error in errors 
+        li!= error.msg

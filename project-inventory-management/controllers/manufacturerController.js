@@ -31,3 +31,24 @@ exports.manufacturer_detail = asyncHandler(async (req, res, next) => {
     manufacturer_models: modelsByManufacturer,
   });
 });
+
+// Display manufacturer update form on GET.
+exports.manufacturer_update_get = asyncHandler(async (req, res, next) => {
+  const [manufacturer] = await Promise.all([
+    Manufacturer.findById(req.params.id).exec(),
+  ]);
+
+  if (manufacturer === null) {
+    // no result
+    const err = new Error("Manufacturer not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("manufacturer_form", {
+    title: "Update Manufacturer",
+    manufacturer: manufacturer,
+  });
+});
+
+exports.manufacturer_update_post;
