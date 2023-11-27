@@ -12,25 +12,42 @@ const category_controller = require("../controllers/categoryController");
 //This actually maps to /catalog/ because we import the route with a /catalog prefix
 router.get("/", model_controller.index);
 
-router.get("/model/:id", model_controller.model_detail);
-
 router.get("/allModels", model_controller.model_list);
+
+// router.get("/model/:id", model_controller.model_detail);
+
+router.get("/models/create", model_controller.model_create_get);
+
+// POST request to create manufacturer
+router.post("/models/create", model_controller.model_create_post);
+
+// GET request to delete manufacturer
+router.get("/models/:id/delete", model_controller.model_delete_get);
+
+// POST request to delete manufacturer
+router.post("/models/:id/delete", model_controller.model_delete_post);
+
+// GET request to update manufacturer
+router.get("/models/:id/update", model_controller.model_update_get);
+// POST request to update manufacturer
+router.post("/models/:id/update", model_controller.model_update_post);
+
+router.get("/model", model_controller.model_list);
+
+router.get("/model/:id", model_controller.model_detail);
 
 /// MANUFACTURER ROUTES ///
 
-router.get("/manufacturer", manufacturer_controller.manufacturer_list);
-
-router.get("/manufacturer/:id", manufacturer_controller.manufacturer_detail);
-
-// GET request to update manufacturer
+// GET request to create manufacturer
 router.get(
-  "/manufacturer/:id/update",
-  manufacturer_controller.manufacturer_update_get
+  "/manufacturer/create",
+  manufacturer_controller.manufacturer_create_get
 );
-// POST request to update manufacturer
+
+// POST request to create manufacturer
 router.post(
-  "/manufacturer/:id/update",
-  manufacturer_controller.manufacturer_update_post
+  "/manufacturer/create",
+  manufacturer_controller.manufacturer_create_post
 );
 
 // GET request to delete manufacturer
@@ -45,17 +62,20 @@ router.post(
   manufacturer_controller.manufacturer_delete_post
 );
 
-// GET request to create manufacturer
+// GET request to update manufacturer
 router.get(
-  "/manufacturer/create",
-  manufacturer_controller.manufacturer_create_get
+  "/manufacturer/:id/update",
+  manufacturer_controller.manufacturer_update_get
+);
+// POST request to update manufacturer
+router.post(
+  "/manufacturer/:id/update",
+  manufacturer_controller.manufacturer_update_post
 );
 
-// POST request to create manufacturer
-router.post(
-  "/manufacturer/create",
-  manufacturer_controller.manufacturer_create_post
-);
+router.get("/manufacturer", manufacturer_controller.manufacturer_list);
+
+router.get("/manufacturer/:id", manufacturer_controller.manufacturer_detail);
 
 /// CATEGORY ROUTES ///
 

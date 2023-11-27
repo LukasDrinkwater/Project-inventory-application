@@ -32,6 +32,96 @@ exports.manufacturer_detail = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.manufacturer_create_get = (req, res, next) => {
+  res.render("manufacturer_form", { title: "Create Manufacturer" });
+};
+
+exports.manufacturer_create_post = [
+  // validate and sanitise fields
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Manufacturer name must be specified"),
+  body("country")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Manufacturer country must be specified"),
+
+  // Then process req
+  asyncHandler(async (req, res, next) => {
+    // get errors from req
+    const errors = validationResult(req);
+    console.log("here");
+    // make new manufacturer object
+    const manufacturer = new Manufacturer({
+      name: req.body.name,
+      country: req.body.country,
+    });
+
+    console.log(manufacturer.url);
+
+    if (!errors.isEmpty()) {
+      res.render("manufacturer_form", {
+        title: "Create Manufacturer",
+        manufacturer: manufacturer,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // data is valid
+
+      await manufacturer.save();
+      // then redirect to new manufacturer record
+      res.redirect(manufacturer.url);
+    }
+  }),
+];
+
+exports.manufacturer_delete_get = asyncHandler(async (req, res, next) => {
+  const [manufacturer, allModelsByManufacturer] = await Promise.all([
+    Manufacturer.findById(req.params.id).exec(),
+    Model.find({ manufacturer: req.params.id }).exec(),
+  ]);
+
+  if (manufacturer === null) {
+    res.redirect("/catalog/manufacturer");
+  }
+
+  res.render("manufacturer_delete", {
+    title: "Delete Manufacturer",
+    manufacturer: manufacturer,
+    manufacturer_models: allModelsByManufacturer,
+  });
+});
+
+exports.manufacturer_delete_post = asyncHandler(async (req, res, next) => {
+  // get details of manufacturer and all their models
+  const [manufacturer, allModelsByManufacturer] = await Promise.all([
+    Manufacturer.findById(req.params.id).exec(),
+    Model.find({ manufacturer: req.params.id }).exec(),
+  ]);
+
+  console.log(manufacturer.id);
+  console.log(req.body.manufacturerid);
+
+  if (allModelsByManufacturer.length > 0) {
+    // manufacturer has models
+    res.render("manufacturer_delete", {
+      title: "Delete Manufacturer",
+      manufacturer: manufacturer,
+      manufacturer_models: allModelsByManufacturer,
+    });
+    return;
+  } else {
+    // no books, its ok to delete
+    await Manufacturer.findByIdAndRemove(req.body.manufacturerid);
+
+    res.redirect("/catalog/manufacturer");
+  }
+});
+
 // Display manufacturer update form on GET.
 exports.manufacturer_update_get = asyncHandler(async (req, res, next) => {
   // dispays current data from the selected manufacturer so you can update it.
@@ -96,90 +186,3 @@ exports.manufacturer_update_post = [
 ];
 
 // Display Manufacturer delete form on GET
-
-exports.manufacturer_delete_get = asyncHandler(async (req, res, next) => {
-  const [manufacturer, allModelsByManufacturer] = await Promise.all([
-    Manufacturer.findById(req.params.id).exec(),
-    Model.find({ manufacturer: req.params.id }).exec(),
-  ]);
-
-  if (manufacturer === null) {
-    res.redirect("/catalog/manufacturer");
-  }
-
-  res.render("manufacturer_delete", {
-    title: "Delete Manufacturer",
-    manufacturer: manufacturer,
-    manufacturer_models: allModelsByManufacturer,
-  });
-});
-
-exports.manufacturer_delete_post = asyncHandler(async (req, res, next) => {
-  // get details of manufacturer and all their models
-  const [manufacturer, allModelsByManufacturer] = await Promise.all([
-    Manufacturer.findById(req.params.id).exec(),
-    Model.find({ manufacturer: req.params.id }).exec(),
-  ]);
-
-  console.log(allModelsByManufacturer);
-
-  if (allModelsByManufacturer.length > 0) {
-    // manufacturer has models
-    res.render("manufacturer_delete", {
-      title: "Delete Manufacturer",
-      manufacturer: manufacturer,
-      manufacturer_models: allModelsByManufacturer,
-    });
-    return;
-  } else {
-    // no books, its ok to delete
-    await Model.findByIdAndDelete(req.body.authorid);
-
-    res.redirect("/catalog/manufacturer");
-  }
-});
-
-exports.manufacturer_create_get = (req, res, next) => {
-  res.render("manufacturer_form", { title: "Create Manufacturer" });
-};
-
-exports.manufacturer_create_post = [
-  // validate and sanitise fields
-  body("name")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("Manufacturer name must be specified"),
-  body("country")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("Manufacturer country must be specified"),
-
-  // Then process req
-  asyncHandler(async (req, res, next) => {
-    // get errors from req
-    const errors = validationResult(req);
-    console.log("here");
-    // make new manufacturer object
-    const manufacturer = new Manufacturer({
-      name: req.body.name,
-      country: req.body.country,
-    });
-
-    if (!errors.isEmpty()) {
-      res.render("manufactuer_form", {
-        title: "Create Manufacturer",
-        manufacturer: manufacturer,
-        errors: errors.array(),
-      });
-      return;
-    } else {
-      // data is valid
-
-      await manufacturer.save();
-      // then redirect to new manufacturer record
-      res.redirect(manufacturer.url);
-    }
-  }),
-];

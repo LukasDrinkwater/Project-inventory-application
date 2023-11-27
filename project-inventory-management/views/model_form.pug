@@ -6,25 +6,32 @@ block content
 
   form(method="post" action="")
     div(class="form-group")
+      //- label(for="manufacturer") Manufacturer:
+      //- select(type="select", placeholder="Select Manufacturer", name="manufacturer" required="true")
+      //-   - manufacturers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
+      //-   for manufacturer in manufacturers
+      //-     option(value=manufacturer._id selected=(manufacturer._id.toString()===model.manufacturer._id.toString() ? "selected" : false) ) #{manufacturer.name}
+      //-   else 
+      //-     option(value=manufacturer._id) #{manufacturer.name}
       label(for="manufacturer") Manufacturer:
       select(type="select", placeholder="Select Manufacturer", name="manufacturer" required="true")
-        - manufacturers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCate(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
+        - manufacturers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
         for manufacturer in manufacturers
-          option(value=manufacturer._id selected=(manufacturer._id.toString()===model.author._id.toString() ? "selected" : false) ) #{manufacturer.name}
+          option(value=manufacturer._id selected=(model.manufacturer && manufacturer._id.toString() === model.manufacturer._id.toString() ? "selected" : false) ) #{manufacturer.name}
         else 
-          option(value=author._id) #{manufacturer.name}
+          option(value=manufacturer._id) #{manufacturer.name}
     div(class="form-group")
       label(for="name") Name: 
-      input(type="text", placeholder="Car model name" name="name" required="true") #{undefined===model ? '' : model.name}
+      input(type="text", placeholder="Car model name" name="name" required="true" value=(undefined===model ? '' : model.name))
     div(class="form-group")
       label(for="year") Year: 
-      input(type="text", placeholder="Model year" name="yeae" required="true") #{undefined===model ? '' : model.year}
+      input(type="text", placeholder="Model year" name="year" required="true" value=(undefined===model ? '' : model.year))
     div(class="form-group")
       label(for="description") Description: 
-      textarea(type="textarea", placeholder="Description of car" name="description" required="true") #{undefined===model ? '' : model.description}
+      textarea(type="textarea", placeholder="Description of car" name="description" required="true" value=(undefined===model ? '' : model.description))
     div(class="form-group")
       label(for="price") Price: 
-      input(type="number", placeholder="Price of model" name="price" required="true") #{undefined===model ? '' : model.price}
+      input(type="number", placeholder="Price of model" name="price" required="true" value=(undefined===model ? '' : model.price))
     div(class="form-group")
       label(for="category")
       div 
@@ -35,15 +42,3 @@ block content
     button(class="button-primary" type="submit") Submit
 
 
-
-
-
-
-div.form-group
-      label Genre:
-      div
-        for genre in genres
-          div(style='display: inline; padding-right:10px;')
-            input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked )
-            label(for=genre._id) #{genre.name}
-    button.btn.btn-primary(type='submit') Submit
