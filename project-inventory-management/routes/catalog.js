@@ -28,10 +28,34 @@ router.get(
   manufacturer_controller.manufacturer_update_get
 );
 // POST request to update manufacturer
-// router.get(
-//   "/manufacturer/:id/update",
-//   manufacturer_controller.manufacturer_update_post
-// );
+router.post(
+  "/manufacturer/:id/update",
+  manufacturer_controller.manufacturer_update_post
+);
+
+// GET request to delete manufacturer
+router.get(
+  "/manufacturer/:id/delete",
+  manufacturer_controller.manufacturer_delete_get
+);
+
+// POST request to delete manufacturer
+router.post(
+  "/manufacturer/:id/delete",
+  manufacturer_controller.manufacturer_delete_post
+);
+
+// GET request to create manufacturer
+router.get(
+  "/manufacturer/create",
+  manufacturer_controller.manufacturer_create_get
+);
+
+// POST request to create manufacturer
+router.post(
+  "/manufacturer/create",
+  manufacturer_controller.manufacturer_create_post
+);
 
 /// CATEGORY ROUTES ///
 

@@ -1,0 +1,26 @@
+extends layout 
+
+block content 
+  h1 #{title}: #{manufacturer.name}
+  
+  if manufacturer_models.length 
+
+    p #[strong Delete the following models before attempting to delete this manufacturer]
+
+    div(class="delete-models-list")
+
+      h4 Models 
+
+      dl 
+      each model in manufacturer 
+        dt 
+          a(href=model.url) #{model.name} #{model.year}
+  
+  else 
+    p Do you really want to delete this Manufacturer?
+
+    form(method="POST" action="")
+      div(class="form-group")
+        input(class="form-control" type="hidden", name="manufacturerid", required="true", value=manufacturer.id)
+
+      button(class="button-primary", type="submit") Delete

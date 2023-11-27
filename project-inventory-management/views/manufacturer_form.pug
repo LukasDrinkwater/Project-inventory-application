@@ -10,6 +10,7 @@ block content
       input(type="text" placeholder="Name of manufacturer" name="name" required="true" value=(undefined===manufacturer ? "" : manufacturer.name))
       label(for="country")
       input(type="text" placeholder="Manufacturer Country" name="country" required="true" value=(undefined===manufacturer ? "" : manufacturer.country))
+    button(class="button-primary" type="submit") Submit
   if errors 
     ul 
       for error in errors 
