@@ -17,8 +17,6 @@ exports.index = asyncHandler(async (req, res, next) => {
       Category.countDocuments({}).exec(),
     ]);
 
-  // console.log(numModels, numModelInstances, numManufacturers, numCategories);
-
   res.render("index", {
     title: "Model Website Homepage",
     model_count: numModels,
@@ -33,8 +31,6 @@ exports.model_create_get = asyncHandler(async (req, res, next) => {
     Manufacturer.find().exec(),
     Category.find().exec(),
   ]);
-
-  console.log(allManufacturers);
 
   res.render("model_form", {
     title: "Create Model",
@@ -97,8 +93,6 @@ exports.model_create_post = [
         Manufacturer.find().exec(),
         category.find().exec(),
       ]);
-
-      console.log(allManufacturers);
 
       // mark selected categories as checked
       for (const category of allCategories) {
@@ -229,8 +223,6 @@ exports.model_update_post = [
 exports.model_list = asyncHandler(async (req, res, next) => {
   const allModels = await Model.find().populate("manufacturer").exec();
 
-  // console.log(allModels.length);
-
   res.render("model_list", {
     title: "All Models:",
     all_models: allModels,
@@ -242,8 +234,6 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
   const [model] = await Promise.all([
     Model.findById(req.params.id).populate("manufacturer").exec(),
   ]);
-
-  // console.log(req.params.id);
 
   res.render("model_detail", {
     title: model.name,

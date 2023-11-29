@@ -79,6 +79,22 @@ router.get("/manufacturer/:id", manufacturer_controller.manufacturer_detail);
 
 /// CATEGORY ROUTES ///
 
+router.get("/categories/create", category_controller.category_create_get);
+
+// POST request to create manufacturer
+router.post("/categories/create", category_controller.category_create_post);
+
+// GET request to delete manufacturer
+router.get("/categories/:id/delete", category_controller.category_delete_get);
+
+// POST request to delete manufacturer
+router.post("/categories/:id/delete", category_controller.category_delete_post);
+
+// GET request to update manufacturer
+router.get("/categories/:id/update", category_controller.category_update_get);
+// POST request to update manufacturer
+router.post("/categories/:id/update", category_controller.category_update_post);
+
 router.get("/categories", category_controller.category_list);
 
 router.get("/categories/:id", category_controller.category_detail);

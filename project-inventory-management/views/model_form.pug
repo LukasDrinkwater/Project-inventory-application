@@ -6,20 +6,14 @@ block content
 
   form(method="post" action="")
     div(class="form-group")
-      //- label(for="manufacturer") Manufacturer:
-      //- select(type="select", placeholder="Select Manufacturer", name="manufacturer" required="true")
-      //-   - manufacturers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
-      //-   for manufacturer in manufacturers
-      //-     option(value=manufacturer._id selected=(manufacturer._id.toString()===model.manufacturer._id.toString() ? "selected" : false) ) #{manufacturer.name}
-      //-   else 
-      //-     option(value=manufacturer._id) #{manufacturer.name}
       label(for="manufacturer") Manufacturer:
       select(type="select", placeholder="Select Manufacturer", name="manufacturer" required="true")
-        - manufacturers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
+        - manufacturers.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; });
         for manufacturer in manufacturers
-          option(value=manufacturer._id selected=(model.manufacturer && manufacturer._id.toString() === model.manufacturer._id.toString() ? "selected" : false) ) #{manufacturer.name}
-        else 
-          option(value=manufacturer._id) #{manufacturer.name}
+          if model 
+            option(value=manufacturer._id selected=(manufacturer._id.toString()===model.manufacturer._id.toString() ? "selected" : false) ) #{manufacturer.name}
+          else 
+            option(value=manufacturer._id) #{manufacturer.name}
     div(class="form-group")
       label(for="name") Name: 
       input(type="text", placeholder="Car model name" name="name" required="true" value=(undefined===model ? '' : model.name))
@@ -42,3 +36,4 @@ block content
     button(class="button-primary" type="submit") Submit
 
 
+//- needs the if model for when its updating a current model

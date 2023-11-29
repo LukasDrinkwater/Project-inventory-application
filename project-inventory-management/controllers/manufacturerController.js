@@ -10,8 +10,6 @@ const asyncHandler = require("express-async-handler");
 exports.manufacturer_list = asyncHandler(async (req, res, next) => {
   const allManufacturers = await Manufacturer.find().sort({ name: 1 }).exec();
 
-  // console.log(allManufacturers);
-
   res.render("manufacturer_list", {
     title: "Manufacturers",
     manufacturer_list: allManufacturers,
@@ -23,8 +21,6 @@ exports.manufacturer_detail = asyncHandler(async (req, res, next) => {
     Manufacturer.findById(req.params.id).exec(),
     Model.find({ manufacturer: req.params.id }).exec(),
   ]);
-
-  // console.log(manufacturer);
 
   res.render("manufacturer_detail", {
     manufacturer: manufacturer,
@@ -53,14 +49,12 @@ exports.manufacturer_create_post = [
   asyncHandler(async (req, res, next) => {
     // get errors from req
     const errors = validationResult(req);
-    console.log("here");
+
     // make new manufacturer object
     const manufacturer = new Manufacturer({
       name: req.body.name,
       country: req.body.country,
     });
-
-    console.log(manufacturer.url);
 
     if (!errors.isEmpty()) {
       res.render("manufacturer_form", {
@@ -103,9 +97,6 @@ exports.manufacturer_delete_post = asyncHandler(async (req, res, next) => {
     Model.find({ manufacturer: req.params.id }).exec(),
   ]);
 
-  console.log(manufacturer.id);
-  console.log(req.body.manufacturerid);
-
   if (allModelsByManufacturer.length > 0) {
     // manufacturer has models
     res.render("manufacturer_delete", {
@@ -135,7 +126,6 @@ exports.manufacturer_update_get = asyncHandler(async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  console.log(manufacturer.url);
   res.render("manufacturer_form", {
     title: "Update Manufacturer",
     manufacturer: manufacturer,

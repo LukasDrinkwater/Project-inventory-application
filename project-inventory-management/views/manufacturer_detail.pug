@@ -12,7 +12,6 @@ block content
       each model in manufacturer_models 
         dt
           a(href=model.url) #{model.manufacturer.name} #{model.name} #{model.year}
-          p #{model.url}
           p £#{model.price}
         
       else 
