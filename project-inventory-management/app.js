@@ -39,6 +39,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+console.log(mongoose.connection.readyState);
+
 // middleware stack to use the correct routers
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
